@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
@@ -54,12 +55,20 @@ class AttachmentControllerTest {
         MultipartFile multipartFileToSend = new MockMultipartFile("file", FILE.getName(), MediaType.TEXT_HTML_VALUE, stream);
         ResponseData result = attachmentController.uploadFile(multipartFileToSend);
 
+        String downloadURL = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/download/")
+                .path(attachment.getId().toString())
+                .toUriString();
+
         assertNotNull(result);
 
         assertEquals(result.getClass(), ResponseData.class);
 
         assertEquals(result.getFileName(), FILE.getName());
         assertEquals(result.getFileSize(), multipartFileToSend.getSize());
+        assertEquals(result.getDownloadURL(), downloadURL);
+        assertEquals(result.getFileType(), multipartFileToSend.getContentType());
     }
 
     @Test

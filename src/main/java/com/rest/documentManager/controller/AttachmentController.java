@@ -31,8 +31,6 @@ public class AttachmentController {
                 .path(attachment.getId().toString())
                 .toUriString();
 
-        System.out.println("FILE: " + new ResponseData(attachment.getFileName(), downloadURL, file.getContentType(), file.getSize()));
-
         return new ResponseData(attachment.getFileName(), downloadURL, file.getContentType(), file.getSize());
     }
 
