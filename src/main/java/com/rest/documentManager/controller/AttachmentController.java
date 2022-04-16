@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.UUID;
-
 @RestController
 public class AttachmentController {
 
@@ -32,6 +30,8 @@ public class AttachmentController {
                 .path("/download/")
                 .path(attachment.getId().toString())
                 .toUriString();
+
+        System.out.println("FILE: " + new ResponseData(attachment.getFileName(), downloadURL, file.getContentType(), file.getSize()));
 
         return new ResponseData(attachment.getFileName(), downloadURL, file.getContentType(), file.getSize());
     }
