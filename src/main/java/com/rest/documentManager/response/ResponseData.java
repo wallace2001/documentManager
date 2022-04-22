@@ -1,4 +1,4 @@
-package com.rest.documentManager;
+package com.rest.documentManager.response;
 
 import lombok.*;
 

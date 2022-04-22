@@ -2,6 +2,7 @@ package com.rest.documentManager.service;
 
 import com.rest.documentManager.entity.Attachment;
 import com.rest.documentManager.repository.AttachmentRepository;
+import com.rest.documentManager.service.impl.AttachmentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +20,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

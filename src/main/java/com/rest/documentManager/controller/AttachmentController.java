@@ -1,6 +1,6 @@
 package com.rest.documentManager.controller;
 
-import com.rest.documentManager.ResponseData;
+import com.rest.documentManager.response.ResponseData;
 import com.rest.documentManager.entity.Attachment;
 import com.rest.documentManager.service.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
