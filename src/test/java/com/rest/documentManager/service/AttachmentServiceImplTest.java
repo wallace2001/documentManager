@@ -77,7 +77,7 @@ class AttachmentServiceImplTest {
 
     @Test
     void whenGetAttachmentReturnDownload() throws Exception {
-        when(attachmentRepository.findById(any())).thenReturn(Optional.ofNullable(attachment));
+        when(attachmentRepository.findById(1)).thenReturn(Optional.ofNullable(attachment));
 
         Attachment response = attachmentService.getAttachment(1);
 

@@ -1,5 +1,6 @@
 package com.rest.documentManager.exception;
 
+import com.rest.documentManager.services.exceptions.ErrorControllerException;
 import com.rest.documentManager.services.exceptions.ErrorLoginException;
 import com.rest.documentManager.services.exceptions.ForbidenException;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,12 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler(ErrorControllerException.class)
+    public ResponseEntity<StandardError> errorController(ErrorControllerException ex, HttpServletRequest request) {
+        StandardError error = new StandardError(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 }

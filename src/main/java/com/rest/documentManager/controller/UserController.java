@@ -8,9 +8,14 @@ import com.rest.documentManager.request.AuthRequest;
 import com.rest.documentManager.response.*;
 import com.rest.documentManager.service.ProfileService;
 import com.rest.documentManager.service.UserService;
+import com.rest.documentManager.service.impl.SpriteServiceImpl;
 import com.rest.documentManager.services.exceptions.ErrorLoginException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +39,9 @@ public class UserController {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private SpriteServiceImpl spriteServiceImpl;
 
     // SAVE A NEW PROFILE
     @PostMapping(URL_PUBLIC + "profile")
@@ -125,8 +133,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ConfirmationData(200, "Password changed success!", "Password Change", LocalDateTime.now()));
     }
 
-    // AFTER HERE, ROUTES PROTECTED
 
+    // FETCH ALL PRODUCTS
+    @GetMapping("/fetch/products")
+    public ResponseEntity<Page<SpriteResponse>> fetchAllProducts(
+            @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam("category_id") Long category_id,
+            @RequestParam("size_id") Long size_id) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(spriteServiceImpl.fetchAllProducts(pageable, category_id, size_id));
+    }
+
+    // AFTER HERE, ROUTES PROTECTED
     @GetMapping(URL_API)
     public ResponseEntity<List<Object>> fetchAllUsers() {
 

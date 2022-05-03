@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("User", "Admin")
 
                 // Admin
-                .antMatchers("/admin/**")
+                .antMatchers("/admin/**", "/file/**")
                 .hasAuthority("Admin")
                 .and()
                 .exceptionHandling()

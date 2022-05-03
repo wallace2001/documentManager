@@ -1,0 +1,26 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAU2JURAQS2G26GXEB
+      secret-key: 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
+    region:
+      static: sa-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: markwolf
+    endpoint: https://markwolf.s3.sa-east-1.amazonaws.com
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+server:
+  port: 8081
