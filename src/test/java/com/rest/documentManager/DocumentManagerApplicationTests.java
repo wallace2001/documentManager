@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DocumentManagerApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void main() {
+		DocumentManagerApplication.main(new String[] {});
 	}
 
 }
