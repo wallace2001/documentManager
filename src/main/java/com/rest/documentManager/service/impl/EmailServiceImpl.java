@@ -1,5 +1,6 @@
 package com.rest.documentManager.service.impl;
 
+import com.rest.documentManager.response.SendEmailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -80,6 +81,51 @@ public class EmailServiceImpl {
         helper.setText(html, true);
         helper.setSubject("Notice password change");
         helper.setFrom("nao-response@markin.com.br");
+
+        helper.addInline("logo", new ClassPathResource("/static/images/logo.png"));
+
+        javaMailSender.send(message);
+    }
+
+    public void sendNoticePaymentProduct(String destiny) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, "UTF-8");
+
+        Context context = new Context();
+
+        context.setVariable("title", "Product purchased!");
+        context.setVariable("text", "\n" +
+                "Thank you for purchasing one of our products! Now just enter the site and go to your inventory to be able to download your new product!");
+        context.setVariable("link", "http://localhost:3000/");
+
+        String html = springTemplateEngine.process("email/confirmationPayment", context);
+        helper.setTo(destiny);
+        helper.setText(html, true);
+        helper.setSubject("Notice Product purchased");
+        helper.setFrom("nao-response@markin.com.br");
+
+        helper.addInline("logo", new ClassPathResource("/static/images/logo.png"));
+
+        javaMailSender.send(message);
+    }
+
+    public void sendEmailToAdmin(SendEmailResponse sendEmailResponse) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, "UTF-8");
+
+        Context context = new Context();
+
+        context.setVariable("title", sendEmailResponse.getTitle());
+        context.setVariable("text", "\n" +
+                sendEmailResponse.getDescription());
+        context.setVariable("link", "http://localhost:3000/");
+        context.setVariable("email", sendEmailResponse.getEmail());
+
+        String html = springTemplateEngine.process("email/sendEmailToAdmin", context);
+        helper.setTo("devtestmessage@gmail.com");
+        helper.setText(html, true);
+        helper.setSubject("New question");
+        helper.setFrom(sendEmailResponse.getEmail());
 
         helper.addInline("logo", new ClassPathResource("/static/images/logo.png"));
 

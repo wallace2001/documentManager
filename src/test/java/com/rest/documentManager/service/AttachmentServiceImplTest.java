@@ -77,9 +77,9 @@ class AttachmentServiceImplTest {
 
     @Test
     void whenGetAttachmentReturnDownload() throws Exception {
-        when(attachmentRepository.findById(1)).thenReturn(Optional.ofNullable(attachment));
+        when(attachmentRepository.findById(1L)).thenReturn(Optional.ofNullable(attachment));
 
-        Attachment response = attachmentService.getAttachment(1);
+        Attachment response = attachmentService.getAttachment(1L);
 
         assertNotNull(response);
 
@@ -96,7 +96,7 @@ class AttachmentServiceImplTest {
         when(attachmentRepository.save(any())).thenReturn(attachment);
 
         try {
-            attachmentService.getAttachment(2);
+            attachmentService.getAttachment(2L);
         } catch (Exception exception) {
             assertNotNull(exception);
             assertEquals(exception.getClass(), Exception.class);
@@ -111,6 +111,6 @@ class AttachmentServiceImplTest {
                 Files.readAllBytes(FILE.toPath())
         );
 
-        attachment.setId(1);
+        attachment.setId(1L);
     }
 }

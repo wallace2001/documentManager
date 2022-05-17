@@ -6,6 +6,7 @@ import com.rest.documentManager.exception.ResourceExceptionHandler;
 import com.rest.documentManager.repository.ProfileRepository;
 import com.rest.documentManager.repository.UserRepository;
 import com.rest.documentManager.response.PasswordChangeData;
+import com.rest.documentManager.response.SendEmailResponse;
 import com.rest.documentManager.service.UserService;
 import com.rest.documentManager.services.exceptions.ErrorLoginException;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -165,6 +166,31 @@ public class UserServiceImpl implements UserService {
         }
 
         throw new ErrorLoginException("Email dont found!");
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<User> findByEmailReturnUser(String email) {
+        return userRepository.findByEmailReturnUser(email);
+    }
+
+    @Override
+    public Optional<User> findByIdReturnUser(Long idUser) {
+        return userRepository.findByIdReturnUser(idUser);
+    }
+
+    @Override
+    public void emailConfirmationPayment(String email) throws MessagingException {
+        emailService.sendNoticePaymentProduct(email);
+    }
+
+    @Override
+    public void sendEmailToAdmin(SendEmailResponse sendEmailResponse) throws MessagingException {
+        emailService.sendEmailToAdmin(sendEmailResponse);
     }
 
     @Override

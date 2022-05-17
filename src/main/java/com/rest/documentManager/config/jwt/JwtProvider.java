@@ -1,5 +1,6 @@
 package com.rest.documentManager.config.jwt;
 
+import com.rest.documentManager.services.exceptions.ErrorLoginException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.java.Log;
 import io.jsonwebtoken.Jwts;

@@ -1,5 +1,6 @@
 package com.rest.documentManager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Attachment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Column(name = "file_name")
     private String fileName;
@@ -25,6 +26,7 @@ public class Attachment implements Serializable {
     private String fileType;
 
     @Lob
+    @JsonIgnore
     private byte[] data;
 
     public Attachment(String fileName, String fileType, byte[] data) {

@@ -2,8 +2,12 @@ package com.rest.documentManager.controller;
 
 import com.rest.documentManager.config.jwt.JwtProvider;
 import com.rest.documentManager.dto.UserDto;
+import com.rest.documentManager.entity.Category;
 import com.rest.documentManager.entity.Profile;
+import com.rest.documentManager.entity.Size;
 import com.rest.documentManager.entity.User;
+import com.rest.documentManager.repository.CategoryRepository;
+import com.rest.documentManager.repository.SizeRepository;
 import com.rest.documentManager.request.AuthRequest;
 import com.rest.documentManager.response.*;
 import com.rest.documentManager.service.ProfileService;
@@ -28,6 +32,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/user")
 public class UserController {
 
@@ -42,6 +47,12 @@ public class UserController {
 
     @Autowired
     private SpriteServiceImpl spriteServiceImpl;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
 
     // SAVE A NEW PROFILE
     @PostMapping(URL_PUBLIC + "profile")
@@ -149,5 +160,26 @@ public class UserController {
     public ResponseEntity<List<Object>> fetchAllUsers() {
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAllUsers());
+    }
+
+    // FETCH CATEGORIES
+    @GetMapping(URL_PUBLIC + "fetch/categories")
+    public List<Category> fetchCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @GetMapping(URL_PUBLIC + "fetch/sizes")
+    public List<Size> fetchSizes() {
+        return sizeRepository.findAll();
+    }
+
+    @PostMapping(URL_PUBLIC + "send/email")
+    public void sendEmail(@RequestBody SendEmailResponse sendEmailResponse) throws MessagingException {
+        userService.sendEmailToAdmin(sendEmailResponse);
+    }
+
+    @GetMapping(URL_PUBLIC + "fetch/total/products")
+    public ResponseEntity<Object> fetchTotalPageProductByUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(spriteServiceImpl.fetchTotalPageProductByUser());
     }
 }

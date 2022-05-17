@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ResponseData {
 
+    private Long id;
     private String fileName;
     private String downloadURL;
     private String fileType;

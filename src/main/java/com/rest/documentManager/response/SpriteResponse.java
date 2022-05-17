@@ -23,6 +23,7 @@ public class SpriteResponse {
     private BigDecimal price;
     private String slug;
     private Boolean isUnique;
+    private String description;
     private Boolean active;
     private Category category;
     private Size size;
@@ -30,7 +31,7 @@ public class SpriteResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public SpriteResponse(Long id, String name, BigDecimal price, String slug, Boolean isUnique, Boolean active, Category category, Size size, Image image, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public SpriteResponse(Long id, String name, BigDecimal price, String slug, Boolean isUnique, Boolean active, Category category, Size size, Image image, LocalDateTime createdAt, LocalDateTime updatedAt, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -38,6 +39,7 @@ public class SpriteResponse {
         this.isUnique = isUnique;
         this.active = active;
         this.category = category;
+        this.description = description;
         this.size = size;
         this.image = image;
         this.createdAt = createdAt;

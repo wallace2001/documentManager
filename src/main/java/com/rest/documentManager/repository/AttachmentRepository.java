@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AttachmentRepository extends JpaRepository<Attachment, Integer> {
+public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
     Optional<Attachment> findById(Long attachment_id);
 }

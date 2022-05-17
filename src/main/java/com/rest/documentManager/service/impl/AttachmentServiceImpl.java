@@ -31,7 +31,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public Attachment getAttachment(Integer id) throws Exception {
+    public Attachment getAttachment(Long id) throws Exception {
         return attachmentRepository.findById(id).orElseThrow(() -> new Exception("File not found with Id: " + id));
     }
 }

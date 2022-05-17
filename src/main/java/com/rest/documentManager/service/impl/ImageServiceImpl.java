@@ -44,9 +44,8 @@ public class ImageServiceImpl implements ImageService {
             }
             File fileObj = convertMultiPartFileToFile(file);
             String fileNameObj = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            log.info(fileNameObj);
             amazonS3.putObject(new PutObjectRequest(bucketName, fileNameObj, fileObj));
-            String fileUrl = endpointAmazon + "/" + fileName;
+            String fileUrl = endpointAmazon + "/" + fileNameObj;
             fileObj.delete();
 
             Image image = new Image(fileUrl);

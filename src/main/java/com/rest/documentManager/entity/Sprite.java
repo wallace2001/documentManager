@@ -33,6 +33,9 @@ public class Sprite implements Serializable {
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
 
+    @ManyToOne
+    private Payment payment;
+
     @OneToOne
     @JoinColumn(name = "size_id", referencedColumnName = "id")
     private Size size;
