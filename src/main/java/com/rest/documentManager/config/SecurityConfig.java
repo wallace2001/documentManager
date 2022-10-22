@@ -50,11 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // User and Admin
                 .antMatchers("/user/api/**")
-                .hasAnyAuthority("User", "Admin")
+                .hasAnyAuthority("user", "admin")
 
                 // Admin
                 .antMatchers("/admin/**", "/file/**")
-                .hasAuthority("Admin")
+                .hasAuthority("admin")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
