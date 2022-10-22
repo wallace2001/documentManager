@@ -1,5 +1,6 @@
 package com.rest.documentManager.cors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -8,12 +9,17 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-    private String originPermitida = "http://localhost:3000"; // TODO: Configurar para outros ambiantes
+    @Value("${url}")
+    private String URL;
+
+    @Value("${other.url}")
+    private String OTHER_URL;
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -22,10 +28,15 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        response.setHeader("Access-Control-Allow-Origin", originPermitida);
+        if (URL.equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Origin", URL);
+        } else if (OTHER_URL.equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Origin", OTHER_URL);
+        }
+
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        if ("OPTIONS".equals(request.getMethod()) && originPermitida.equals(request.getHeader("Origin"))) {
+        if ("OPTIONS".equals(request.getMethod()) && (URL.equals(request.getHeader("Origin")) || OTHER_URL.equals(request.getHeader("Origin")))) {
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
             response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
             response.setHeader("Access-Control-Max-Age", "3600");

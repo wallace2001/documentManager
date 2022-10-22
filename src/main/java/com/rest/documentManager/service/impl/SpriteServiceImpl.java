@@ -1,11 +1,8 @@
 package com.rest.documentManager.service.impl;
 
 import com.rest.documentManager.entity.Attachment;
-import com.rest.documentManager.entity.Payment;
 import com.rest.documentManager.entity.Sprite;
 import com.rest.documentManager.repository.SpriteRepository;
-import com.rest.documentManager.response.CategoriesBoughtResponse;
-import com.rest.documentManager.response.CategoryInstance;
 import com.rest.documentManager.response.SpriteResponse;
 import com.rest.documentManager.service.SpriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +11,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service

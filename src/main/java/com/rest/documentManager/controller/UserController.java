@@ -23,10 +23,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -66,7 +67,7 @@ public class UserController {
         return profileService.fetchAllProfiles();
     }
 
-    // REGISTER CONTROLLER
+     // REGISTER CONTROLLER
     @PostMapping(URL_PUBLIC + "register")
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto) throws MessagingException {
         if (userService.findByEmail(userDto.getEmail())) {
@@ -92,7 +93,7 @@ public class UserController {
     }
 
 
-    // AUTHENTICATION LOGIN
+     // AUTHENTICATION LOGIN
     @PostMapping(URL_PUBLIC + "auth")
     public AuthResponse auth(@RequestBody AuthRequest authRequest) {
         User user = userService.findByLoginAndPassword(authRequest.getLogin(), authRequest.getPassword());
@@ -106,11 +107,10 @@ public class UserController {
 
     // CONFIRM ACCOUNT
     @GetMapping(URL_PUBLIC + "confirmation/{code}")
-    public ResponseEntity<ConfirmationData> confirmationAccount(@PathVariable(value = "code") String code, RedirectAttributes attr) {
-        System.out.println("Code" + code);
+    public void confirmationAccount(@PathVariable(value = "code") String code, HttpServletResponse response) throws IOException {
         userService.activeAccount(code);
 
-       return ResponseEntity.status(HttpStatus.OK).body(new ConfirmationData(200, "Your account have verified!", "active Account", LocalDateTime.now()));
+        response.sendRedirect("http://localhost:3000/");
     }
 
     // SEND CONFIRMATION CHANGE PASSWORD TO EMAIL

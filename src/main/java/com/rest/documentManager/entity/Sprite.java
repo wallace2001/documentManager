@@ -22,19 +22,12 @@ public class Sprite implements Serializable {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "attachment_id", referencedColumnName = "id")
-    private Attachment attachment;
-
-    @OneToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @OneToOne
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
-
-    @ManyToOne
-    private Payment payment;
 
     @OneToOne
     @JoinColumn(name = "size_id", referencedColumnName = "id")

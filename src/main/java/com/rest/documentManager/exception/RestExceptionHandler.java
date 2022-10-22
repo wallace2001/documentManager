@@ -70,5 +70,26 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
                 apiError);
     }
 
+    @ExceptionHandler({ RuntimeException.class })
+    public ResponseEntity<Object> handleRuntimeException(
+            RuntimeException ex, WebRequest request) {
+
+        StandardError apiError =
+                new StandardError(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getLocalizedMessage(), request.getContextPath());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                apiError);
+    }
+
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<Object> handleExceptionE(
+            Exception ex, WebRequest request) {
+
+        StandardError apiError =
+                new StandardError(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getMessage(), request.getContextPath());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                apiError);
+    }
+
+
 
 }
