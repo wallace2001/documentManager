@@ -46,8 +46,6 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) throws MessagingException {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
-        emailConfirmationRegister(user.getEmail());
-
         return userRepository.save(user);
     }
 
